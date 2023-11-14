@@ -25,8 +25,8 @@ public class ProductoServicio implements IProductoServicio{
     }
 
     @Override
-    public void guardarProducto(Producto producto) {
-        this.productoRepositorio.save(producto); //si el id del producto es null se hace un insert,
+    public Producto guardarProducto(Producto producto) {
+         return this.productoRepositorio.save(producto); //si el id del producto es null se hace un insert,
                                                  //si es diferenrte de null se hace un update
     }
 
