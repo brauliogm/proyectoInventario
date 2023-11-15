@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Producto } from '../producto';
+import { ProductoService } from '../producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -7,17 +9,33 @@ import { Producto } from '../producto';
   styleUrls: ['./agregar-producto.component.css']
 })
 export class AgregarProductoComponent {
-  producto: Producto;
+  producto: Producto = new Producto();
 
-  constructor(){}
+  constructor(private productoServicio: ProductoService,
+              private enrutador: Router){}
 
   ngOnInit(){
-    this.producto = new Producto
+    
+  }
+
+  onSubmit(){
+    this.agregarProducto();
   }
 
   agregarProducto(){
-    console.log(this.producto);
-    
+    this.productoServicio.agregarProducto(this.producto).subscribe(
+      {
+        next: (datos) => {
+          this.irListaProductos();
+        },
+        error: (error: any) => {console.log(error);
+        }
+      }
+    );
+  }
+
+  irListaProductos(){
+    this.enrutador.navigate(['/productos']);
   }
 
 }
